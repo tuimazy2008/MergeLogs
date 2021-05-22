@@ -111,8 +111,11 @@ class LogsMerger:
             next_out_log_line = fd_in.readline()
 
             # If line contain time that exceeds minimal time from another file
-            if not next_out_log_line or (stop_time and LogsMerger.get_log_time(next_out_log_line) > stop_time):
-                break
+            if not next_out_log_line:
+                return None
+            elif stop_time and LogsMerger.get_log_time(next_out_log_line) > stop_time:
+                return next_out_log_line
+
             # Write line in out log
             fd_out.write(next_out_log_line)
 
@@ -163,9 +166,12 @@ class LogsMerger:
         Read two log files and merge them into output one
         """
         with open(self.log_a_path) as fd_a, open(self.log_b_path) as fd_b, open(self.output_log_path, 'w') as fd_out:
+
+            line_a = line_b = None
             while True:
                 # Read line from each file
-                line_a, line_b = fd_a.readline(), fd_b.readline()
+                line_a = fd_a.readline() if not line_a else line_a
+                line_b = fd_b.readline() if not line_b else line_b
 
                 if not line_a and not line_b:
                     break
@@ -178,21 +184,23 @@ class LogsMerger:
                     # First line was already read, so we can write it
                     fd_out.write(line_a)
                     # Write next lines from log_A until time from B
-                    LogsMerger.write_logs_until(fd_a, fd_out, time_b)
+                    line_a = LogsMerger.write_logs_until(fd_a, fd_out, time_b)
                     # Next time is time_B so we can write this log
                     fd_out.write(line_b)
+                    line_b = None
 
                 # Opposite situation
                 elif not time_a or time_a > time_b:
                     fd_out.write(line_b)
-                    LogsMerger.write_logs_until(fd_b, fd_out, time_a)
+                    line_b = LogsMerger.write_logs_until(fd_b, fd_out, time_a)
                     fd_out.write(line_a)
+                    line_a = None
 
                 # Same time in both files
                 else:
                     fd_out.write(line_a)
                     fd_out.write(line_b)
-
+                    line_a = line_b = None
 
 def main():
     LogsMerger().merge()
