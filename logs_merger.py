@@ -202,6 +202,7 @@ class LogsMerger:
                     fd_out.write(line_b)
                     line_a = line_b = None
 
+                    
 def main():
     LogsMerger().merge()
 
