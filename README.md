@@ -1,6 +1,7 @@
 # Logs merger #
 
 ## Description ##
+```
 Given two files with logs in JSON format, example:
 …
 {"timestamp": "2021-02-26 08:59:20", "log_level": "INFO", "message": "Hello"}
@@ -15,3 +16,4 @@ log_generator.py <path/to/dir>
 
 Command for the resulted script
 <your_script>.py <path/to/log1> <path/to/log2> -o <path/to/merged/log>
+```
