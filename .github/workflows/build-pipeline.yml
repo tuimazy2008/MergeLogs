@@ -37,3 +37,9 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Merge logs
         run: python3 logs_merger.py test/log_a.jsonl test/log_b.jsonl
+      
+      - name: Publish merged file
+        uses: actions/upload-artifact@v2
+        with:
+          name: merged_logs
+          path: ./Output.jsonl
