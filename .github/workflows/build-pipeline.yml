@@ -28,18 +28,20 @@ jobs:
       - name: Generate logs
         run: python3 log_generator.py test
       
+      # Publish generated log files
       - name: Publish generated files
         uses: actions/upload-artifact@v2
         with:
           name: generated_logs
           path: test
 
-      # Runs a set of commands using the runners shell
+      # Runs script for merging given logs
       - name: Merge logs
         run: python3 logs_merger.py test/log_a.jsonl test/log_b.jsonl
       
+      # Publish merged logs
       - name: Publish merged file
         uses: actions/upload-artifact@v2
         with:
-          name: merged_logs
+          name: merged_log
           path: ./Output.jsonl
