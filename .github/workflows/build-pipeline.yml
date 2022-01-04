@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Generate logs
-        run: echo Hello, world!
+        run: python3 log_generator.py test
 
       # Runs a set of commands using the runners shell
       - name: Merge logs
