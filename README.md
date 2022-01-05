@@ -16,5 +16,4 @@ Command for the resulted script
 <your_script>.py <path/to/log1> <path/to/log2> -o <path/to/merged/log>
 
 #### Last Build: ####
-![CI](https://github.com/tuimazy2008/MergeLogs/actions/workflows/build-pipeline/badge.svg)
-
+![CI](https://github.com/tuimazy2008/MergeLogs/actions/workflows/build-pipeline.yml/badge.svg)
