@@ -2,7 +2,7 @@
 
 name: CI
 env:
-  LOGS_FOLDER_NAME : test
+  LOGS_FOLDER_NAME : output_folder
 
 # Controls when the workflow will run
 on:
@@ -39,7 +39,7 @@ jobs:
 
       # Runs script for merging given logs
       - name: Merge logs
-        run: python3 logs_merger.py test/log_a.jsonl test/log_b.jsonl
+        run: python3 logs_merger.py ${{ env.LOGS_FOLDER_NAME }}/log_a.jsonl ${{ env.LOGS_FOLDER_NAME }}/log_b.jsonl
       
       # Publish merged logs
       - name: Publish merged file
